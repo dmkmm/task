@@ -1,0 +1,75 @@
+<div class="container">
+	<div class="jumbotron">
+	  <h1>Hello, {{ct.userName}}</h1>
+	  <p>
+		  	This is simple example of how to pass data between controller's without $rootScope.
+	  </p>
+	</div>
+</div>
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Phone input formatter directive</h4>
+		</div>
+		<div class="panel-body">
+			<input type="text" class="form-control" ng-model="ct.phone" format-phone placeholder="(___) ___-____">
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Money input formatter directive</h4>
+		</div>
+		<div class="panel-body">
+			<input type="text" class="form-control" ng-model="ct.money" format-money placeholder="$_,___,___,___">
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Sum of first 3 inputs in 4</h4>
+		</div>
+		<div class="panel-body">
+			<form class="row">
+				<div class="col-xs-3">
+					<input type="number" class="form-control" ng-model="ct.inputs.first.value" ng-change="ct.onChangeInput();" min="0">
+				</div>
+				<div class="col-xs-3">
+					<input type="number" class="form-control" ng-model="ct.inputs.second.value" ng-change="ct.onChangeInput();" min="0">
+				</div>
+				<div class="col-xs-3">
+					<input type="number" class="form-control" ng-model="ct.inputs.third.value" ng-change="ct.onChangeInput();" min="0">
+				</div>
+				<div class="col-xs-3">
+					<input type="number" class="form-control" ng-model="ct.inputs.result" ng-change="ct.onChangeResult();" min="0">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Auto jump to next / previous element</h4>
+		</div>
+		<div class="panel-body">
+			<form class="row">
+				<div class="col-xs-4">
+					<input type="text" class="form-control" ng-model="ct.tabindex.first" tabindex-auto tabindex="1" ng-maxlength="5">
+				</div>
+				<div class="col-xs-4">
+					<input type="text" class="form-control" ng-model="ct.tabindex.second" tabindex-auto tabindex="2" ng-maxlength="5">
+				</div>
+				<div class="col-xs-4">
+					<input type="text" class="form-control" ng-model="ct.tabindex.third" tabindex-auto tabindex="3" ng-maxlength="5">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

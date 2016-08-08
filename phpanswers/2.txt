@@ -1,0 +1,15 @@
+WP Super cache can use 3 approaches to cache:
+- mod_revrite
+- php (without init WP Core)
+- legacy
+
+In all cases this plugin write it's cache in filesystem.
+For 3 equal servers ... name of cache file will be same (md5 from url)
+
+So to revalidate it's cache we have 2 options:
+1. Write additional stuff that let us notify other servers to remove file by it's key (name of file) when we update post.
+2. Use additional tool to sync this folders. (As codes / database / servers are same ...
+that's means that cache folder should contain same files). For example: Unison File Synchronizer
+
+But in case of use load balancer ... better option would be to use one shared Memcached instance.
+So in this situation ... we should use another caching plugin, like W3 Total Cache or Batcache.

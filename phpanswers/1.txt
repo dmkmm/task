@@ -1,0 +1,41 @@
+When application is in production we can have 2 types of images assets:
+1. Images that is part of layouts (icons / backgrounds / some images in footer ... etc)
+2. Images uploaded by user. (It can be huge amount of data)
+
+In that case we should split layout images from images uploaded by user.
+And touch only layout images.
+
+So, how to deploy:
+
+In case, when we push updates to git, we have 2 options:
+- do all stuff manually (by hands)
+- use automation tools, for example Heroku (It will deploy not only app, but assets too)
+
+In general deployment process depends from many factors:
+- what type of iaas we use
+- where we test our app (if we do so at all)
+- from exact architecture of our app
+... etc
+
+As for me deployment process have to look like this:
+1. Make changes on local / development server
+2. Build and run tests
+3. If all is ok then Commit and push to git
+4. Pull from git to production server, build and push assets to cdn in new directory (named for example as md5 of current timestamp)
+5. Change assets links to new values
+
+Why change folder names?
+
+Because cdn in general use pull-based caching. That means that we can't just say for all points worldwide:
+"Hey, guys ... you should revalidate your cache, because I change this file".
+
+In case of changing name of root assets folder, when user will request new data ...
+any of cdn instance will take a look that this file is not available in it's own cache.
+So this instance will make request to your server, get this file, give it to client, and cache new version.
+It will take more time than usually, and increase load on your server where assets are hosted.
+So you shouldn't update assets when you under load :)
+
+One problem is ... when old cache will be cleared ... but it's a problem of CDN provider.
+
+To automate this process we can create own scripts, or use tools like Heroku, Capistrano ... etc.
+Depends from situation.

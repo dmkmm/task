@@ -1,0 +1,64 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4>Search by:</h4>
+				</div>
+				<div class="panel-body" ng-init="ct.filter = {name: {}};">
+					<div class="form-group">
+						<input type="text" class="form-control" ng-model="ct.filter.name.first" placeholder="First name">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" ng-model="ct.filter.name.last" placeholder="Last name">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" ng-model="ct.filter.address" placeholder="Address">
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4>Order by:</h4>
+				</div>
+				<div class="panel-body" ng-init="ct.filter = {name: {}};">
+					<div class="form-group">
+						<select class="form-control" ng-model="ct.orderBy">
+							<option value="" selected>Default</option>
+							<option value="age">Age</option>
+							<option value="balance">Account balance</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<select class="form-control" ng-model="ct.orderReverse">
+							<option value="" selected>asc</option>
+							<option value="-">desc</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-8" ng-if="ct.items">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4>List</h4>
+				</div>
+				<ul class="list-group">
+					<li class="list-group-item" ng-repeat="item in ct.items | filter:ct.filter | orderBy:ct.orderReverse + ct.orderBy">
+						<div class="media">
+							<div class="media-left">
+								<img class="media-object" ng-src="{{item.picture}}">
+							</div>
+							<div class="media-body">
+								<h4 class="media-heading">{{item.name.first}} {{item.name.last}}, {{item.age}} <small style="font-weight: bold;">{{item.balance}}</small></h4>
+								<i>Email: </i> {{item.email}} <br>
+								<i>Phone: </i> {{item.phone}} <br>
+								<i>Address: </i> {{item.address}}
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

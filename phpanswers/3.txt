@@ -1,0 +1,24 @@
+1m of records is not about services like Twitter or Instagram :)
+
+In this case we can't store only one record in db. And then just search on it using JOIN's and ORDER BY.
+As for me it's not a big no-no ... it's an Eight deadly sin :)
+
+In this case correlation of read / write operations is 99 to 1.
+So we should optimize reading.
+
+Cache is not about our case. Because feed can be refreshed every half a second.
+
+In this situation I will recommend to build feed for each user separately and then just show it to him.
+It's a big amount of duplication's ... but it help our servers to survive under high traffic.
+And it's gives us possibility to build horizontally scalable architecture.
+
+What I mean ... when another user post smth to his timeline. We have:
+1. Add this entry to his database and return "ok" to client application
+2. Query a task on another server to update streams of all followers (so followers will notified with delay)
+This have to be a dedicated server / process ... and he has to know how to do this stuff.
+3. Use long pooling, sockets or server sent events to notify "online client's" about updates
+
+Main idea is ... one server (pool of servers) should process one portion of user accounts. (for example from ID: 1000001-1100000)
+And other parts of ingrastructure (core servers / comet servers / fat client (in some cases) ) should know that all stuff according to this accounts can be reached only there.
+
+It's just a briefly explanation how to achieve such things.
