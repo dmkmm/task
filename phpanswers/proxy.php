@@ -1,13 +1,19 @@
-<?php 
+<?php
 	/**
 	 * FB Graph API proxy
 	 * Copy request options and sent it to FB api.
 	 * Return FB response headers and body
 	 *
-	 * To run script: php -S ip:port proxy.php 
+	 * To run script: php -S ip:port proxy.php
+	 *
+	 * Auth token (access token) can be passed via GET or POST parameters.
+	 *
+	 * Route's to edges and nodes of graph are same as for https://graph.facebook.com
 	 */
 
 	header('content-type: application/json; charset=UTF-8');
+
+	$requestHeaders = getallheaders();
 
 	$options = [
 		'http' => [
@@ -25,11 +31,9 @@
 	}
 
 	$context  = stream_context_create($options);
-	
 
 	$connectionStream = fopen('https://graph.facebook.com' . $_SERVER['REQUEST_URI'], 'r', false, $context);
 
-	
 	$content = '';
 	while (!feof($connectionStream)) {
 	    $content .= fread($connectionStream, 8192);
@@ -41,5 +45,5 @@
 	];
 
 	fclose($connectionStream);
-	
+
 	echo json_encode($response);

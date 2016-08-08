@@ -1,9 +1,17 @@
-<?php 
-	
+<?php
 	/**
-	 * Make readline works on windows
+	 * PHP console script to resize image
+	 *
+	 * Command to run script: php image.php -f="source file path" -w="new width" -h="new height" -o="output file path"
+	 * Parameters: -f and -o both required
+	 * Parameters: -w and -h required at least one of them
 	 */
-	if(!function_exists('readline') && PHP_OS == 'WINNT') 
+
+
+	/**
+	 * Make readline works on OS Windows
+	 */
+	if(!function_exists('readline') && PHP_OS == 'WINNT')
 	{
 		function readline($prompt)
 		{
@@ -16,7 +24,7 @@
 	$options = getopt("f:w::h::o:");
 
 	/**
-	 * Checking for required input file path 
+	 * Checking for required input file path
 	 */
 	while(!array_key_exists('f', $options) || !file_exists($options['f']))
 	{
@@ -24,7 +32,7 @@
 
 		if($options['f'] == 'q')
 			exit;
-		
+
 		if(!file_exists($options['f']))
 		{
 			echo 'File not founded!' . PHP_EOL;
@@ -35,14 +43,14 @@
 	$imageSize = getimagesize($options['f']);
 
 	/**
-	 * Check if file have image mimetype 
+	 * Check if file have image mimetype
 	 * (if file is not an image getimagesize return false)
 	 */
 	if(!$imageSize)
 	{
 		exit('Given file is not an image! Or unsupported image type');
 	}
-	
+
 	/**
 	 * Output information about image file
 	 */
@@ -50,9 +58,9 @@
 
 	echo 'File name: ' . $pathInfo['filename'] . PHP_EOL;
 	echo 'File extension: ' . $pathInfo['extension'] . PHP_EOL;
-	
+
 	/**
-	 * Checking for specified output file name 
+	 * Checking for specified output file name
 	 */
 	if(!array_key_exists('o', $options))
 	{
@@ -62,14 +70,14 @@
 	{
 		exit('Output filename is not in correct format [name.extension]');
 	}
-	
+
 
 	/**
-	 * Checking is output file extension correct 
+	 * Checking is output file extension correct
 	 */
 	$matches = [];
 	preg_match("/\..{3,4}$/", $options['o'], $matches);
-	
+
 	if(!in_array(str_replace('.', '', $matches[0]), ['bmp', 'gif', 'jpg', 'png', 'jpeg']))
 	{
 		exit('Unsupported output filename extension');
@@ -117,9 +125,9 @@
 
 	$imageType = str_replace('image/', '', $imageSize['mime']);
 
-	if(in_array($imageType, ['jpeg', 'pjpeg', 'x-jps'])) 
+	if(in_array($imageType, ['jpeg', 'pjpeg', 'x-jps']))
 		$imageType = 'jpg';
-	
+
 	$oldImage = null;
 	switch($imageType)
 	{
@@ -147,7 +155,7 @@
 	imagecopyresampled($newImage, $oldImage, 0, 0, 0, 0, $newWidth, $newHeight, intval($imageSize[0]), intval($imageSize[1]));
 
 	/**
-	 * Make sure that destination folder exists 
+	 * Make sure that destination folder exists
 	 */
 	if(!file_exists(dirname($options['o'])))
 	{

@@ -1,9 +1,80 @@
-.uiview--content > *{
-	transition: opacity 2s ease;
+.ng-animate__wrap{
+	overflow: hidden;
+	position: relative;
 }
-.uiview--content.ng-enter > *{
-	opacity: 0;
+.uiview--content{
+	transition: all 5s ease;
+	-webkit-animation-duration: .3s;
+	animation-duration: .3s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	min-height: 100vh;
 }
-.uiview--content.ng-leave > *{
-	opacity: 1;
+.uiview--content.ng-enter{
+	-webkit-animation-name: slideInRight;
+	animation-name: slideInRight;
+	/*-webkit-animation-delay: .5s;
+	animation-delay: .5s;*/
+}
+
+.uiview--content.ng-leave{
+	position: absolute;
+	top: 0;
+	-webkit-animation-name: slideOutLeft;
+	animation-name: slideOutLeft;
+}
+
+
+@-webkit-keyframes slideInRight {
+  from {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+	 display: none;
+  }
+
+  to {
+	  display: block;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@-webkit-keyframes slideOutLeft {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    visibility: hidden;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    visibility: hidden;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
 }

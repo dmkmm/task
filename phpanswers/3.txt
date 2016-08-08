@@ -12,6 +12,16 @@ In this situation I will recommend to build feed for each user separately and th
 It's a big amount of duplication's ... but it help our servers to survive under high traffic.
 And it's gives us possibility to build horizontally scalable architecture.
 
+For tiny projects it can be one database with separate tables for each user feed.
+For example: prefix_userXXXX_feed, where XXXX - user ID.
+
+For not very large projects we can use sql database to save profile / groups posts there.
+And for each user use MongoDB to create own feed.
+
+For very large amount of data we need few dedicated servers, each of them should have single role.
+Same server that respond on POST request that add new entry to user timeline.
+Can't instantly update feed of 40 million of followers.
+
 What I mean ... when another user post smth to his timeline. We have:
 1. Add this entry to his database and return "ok" to client application
 2. Query a task on another server to update streams of all followers (so followers will notified with delay)
